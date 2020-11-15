@@ -1,0 +1,34 @@
+.input_group {
+    width: 500px;
+    margin: 15px;
+}
+
+.input_group label{
+    display: block;
+    margin: 5px 0;
+}
+
+.text-input {
+    height: 35px;
+    padding: 0 4px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.textarea-input {
+    border-radius: 5px;
+    width: 100%;
+    min-height: 35px;
+    padding: 4px;
+    border: 1px solid grey;
+}
+
+.checkbox-label{
+    display: inline-block !important;
+}
+
+.save_button {
+    background-color: #2e7fff;
+    color: white;
+}

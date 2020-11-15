@@ -4,8 +4,10 @@
 
 * username
 * password
-* id
+* user_id
 * email
+* created_on
+* last_login
 
 ## Liike
 

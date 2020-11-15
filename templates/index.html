@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gymapp | made by Lares</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+    <body>
+        <div class="nav">
+            <a href="/moves" class="navelement right">Liikkeet</a>
+            <a href="/newmove" class="navelement right">Uusi liike</a>
+            <a class="navelement right" href="/logout">Kirjaudu ulos</a>
+        </div>
+        <div class="moves white">
+        {% for move in moves %}
+            <div class="move">
+                <a href="{{ url_for('move', id=move[0]) }}">{{ move[1] }}</a>
+            </div>
+        {% endfor %}
+        </div>
+    </body>
+</html>

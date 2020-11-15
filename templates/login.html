@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gymapp | made by Lares</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    </head>
+    <body class="login_bg">
+        <h1 class="title">Gymapp</h1>
+        <div class="login_box">
+            <h2>Kirjaudu sisään</h2>
+            <form action="/login" method="POST" class="form_group">
+                <div class="input_group">
+                    <label for="username">
+                        Käyttäjänimi
+                    </label>
+                    <input id="username" name="username" type="text" class="text-input" />
+                </div>
+                <div class="input_group">
+                    <label for="password">
+                        Salasana
+                    </label>
+                    <input id="password" name="password" type="password" class="text-input" />
+                </div>
+                <div class="input_group">
+                    <button type="submit" class="button_primary login_button">Kirjaudu</button>
+                </div>
+            </form>
+            <p class="error alert">{{ error }}</p>
+            <span>Eikö sinulla ole käyttäjää? <a href="/signup">Rekisteröidy</a></span>
+        </div>
+    </body>
+</html>

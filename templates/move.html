@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gymapp | made by Lares</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+    <body>
+        <h1>Moro</h1>
+        <form action="/logout" method="POST">
+            <button type="submit" class="button_primary logout_button">Kirjaudu ulos</button>
+        </form>
+        <div class="white">
+            <h3>{{ move[1] }}</h3>
+            <p>{{ move[4] }}</p>
+        </div>
+    </body>
+</html>
