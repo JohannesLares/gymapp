@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Gymapp | made by Lares</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    </head>
-    <body>
-        <h1>Moro</h1>
-        <form action="/logout" method="POST">
-            <button type="submit" class="button_primary logout_button">Kirjaudu ulos</button>
-        </form>
-        <div class="white">
-            <h3>{{ move[1] }}</h3>
-            <p>{{ move[4] }}</p>
+{% extends "logged_layout.html" %}
+{% block content %}
+    <h3>{{ move["name"] }}</h3>
+    <p>{{ move["description"] }}</p>
+    {% if move["public"] %}
+        <p>JULKINEN</p>
+    {% endif %}
+    {% if move["own"] %}
+        <div class="link_wrapper">
+            <a href={{ url_for("edit_move", move_id=move["move_id"]) }} class="link_button save_button" >Muokkaa</a>
         </div>
-    </body>
-</html>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gymapp | made by Lares</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+    </head>
+    <body>
+        <div class="nav">
+            <a href="/moves" class="navelement right">Liikkeet</a>
+            <a href="/newmove" class="navelement right">Uusi liike</a>
+            <a class="navelement right" href="/logout">Kirjaudu ulos</a>
+        </div>
+        <div class="moves white">
+            <h1>{% block title %}{% endblock %}</h1>
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

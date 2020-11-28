@@ -1,40 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Gymapp | made by Lares</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
-    </head>
-    <body>
-        <div class="nav">
-            <a href="/moves" class="navelement right">Liikkeet</a>
-            <a class="navelement right" href="/logout">Kirjaudu ulos</a>
+{% extends "logged_layout.html" %}
+{% block content %}
+    <form action="/newmove" method="POST">
+        <div class="input_group">
+            <label for="name">
+                Liikkeen nimi
+            </label>
+            <input id="name" name="name" type="text" class="text-input" />
         </div>
-        <div class="moves white">
-            <form action="/newmove" method="POST">
-                <div class="input_group">
-                    <label for="name">
-                        Liikkeen nimi
-                    </label>
-                    <input id="name" name="name" type="text" class="text-input" />
-                </div>
-                <div class="input_group">
-                    <label for="desc">
-                        Kuvaus
-                    </label>
-                    <textarea id="desc" name="desc" type="text" class="textarea-input"></textarea>
-                </div>
-                <div class="input_group">
-                    <label for="public" class="checkbox-label">
-                        Julkinen
-                    </label>
-                    <input id="public" name="public" type="checkbox" class="checkbox-input" />
-                </div>
-                <button type="submit" class="button_primary save_button">Tallenna</button>
-            </form>
-            {% if success %}
-                <p class="success alert">Success</p>
-            {% endif %}
+        <div class="input_group">
+            <label for="desc">
+                Kuvaus
+            </label>
+            <textarea id="desc" name="desc" type="text" class="textarea-input"></textarea>
         </div>
-    </body>
-</html>
+        <div class="input_group">
+            <label for="public" class="checkbox-label">
+                Julkinen
+            </label>
+            <input id="public" name="public" type="checkbox" class="checkbox-input" />
+        </div>
+        <button type="submit" class="button_primary save_button">Tallenna</button>
+    </form>
+    <p class="success alert">{{ message }}</p>
+{% endblock %}

@@ -1,21 +1,26 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Gymapp | made by Lares</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    </head>
-    <body>
-        <div class="nav">
-            <a href="/moves" class="navelement right">Liikkeet</a>
-            <a href="/newmove" class="navelement right">Uusi liike</a>
-            <a class="navelement right" href="/logout">Kirjaudu ulos</a>
-        </div>
-        <div class="moves white">
-        {% for move in moves %}
-            <div class="move">
-                <a href="{{ url_for('move', id=move[0]) }}">{{ move[1] }}</a>
-            </div>
-        {% endfor %}
-        </div>
-    </body>
-</html>
+{% extends "logged_layout.html" %}
+{% block title %}LIIKKEET{% endblock %}
+{% block content %}
+    <table class="main_table">
+        <thead>
+            <tr>
+                <th>Nimi</th>
+                <th>Julkinen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for move in moves %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('move', move_id=move[0]) }}">
+                            {{ move[1] }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ move[2] }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

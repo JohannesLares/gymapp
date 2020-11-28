@@ -8,6 +8,7 @@
 * email
 * created_on
 * last_login
+* admin
 
 ## Liike
 
@@ -17,14 +18,6 @@
 * user_id (FK user.id)
 * description
 
-## Toisto
-
-* id
-* liike_id (FK liike.id)
-* paino
-* setti_id (FK setti.id)
-* time
-
 ## Setti
 
 * id
@@ -32,6 +25,10 @@
 * preset_id (FK preset.id)
 * description ym
 * order
+* liike_id
+* paino
+* time
+* toistojen_määrä
 
 ## Preset
 

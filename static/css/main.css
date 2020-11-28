@@ -24,6 +24,21 @@ body {
     box-shadow: 0 0 3px grey;
 }
 
+.link_button {
+    text-decoration: none;
+    padding: 10px;
+    min-width: 75px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 100;
+    border-radius: 5px;
+}
+
+.link_wrapper {
+    margin: 10px 0;
+}
+
 .alert {
     font-weight: 600;
     font-size: 1.1em;
@@ -37,7 +52,7 @@ body {
     border-radius: 6px;
     background-color: white;
     width: calc(100%-20px);
-    margin-top: 20px;
+    margin: 20px;
     padding: 10px;
 }
 
@@ -58,4 +73,30 @@ body {
     background-color: #333;
     color: white;
     box-shadow: 0 0 3px grey;
+}
+
+.main_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.9em;
+}
+
+.main_table thead tr {
+    background-color: #082d68;
+    color: #fff;
+    text-align: left;
+}
+
+.main_table th, .main_table td {
+    padding: 12px 15px;
+}
+
+.main_table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.main_table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
 }
