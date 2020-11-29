@@ -27,6 +27,8 @@ def create_new(name, desc, public):
     if not user.is_admin() and public != "f":
         public = "f"
         message = "Vaihdettu julkisesta privaksi. "
+    if len(name) < 3:
+        return "Nimi liian lyhyt"
     sql = "INSERT INTO moves (name, description, public, user_id) VALUES (:name,:desc,:public,:user_id)"  
     db.session.execute(sql, {"name": name, "desc": desc, "public": public, "user_id": user.get_id()})
     db.session.commit()

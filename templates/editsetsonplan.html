@@ -1,0 +1,32 @@
+{% extends "logged_layout.html" %}
+{% block title %}
+Uusi treenisuunnitelma
+{% endblock %}
+{% block content %}
+    <h3>Liikesarjat (tavoitteet)</h3>
+    <form action='{{ url_for("add_moves_to_plan", plan_id=plan_id, move_count=count) }}' method="POST">
+        {% for i in range(count) %}
+        <div id="inputs">
+            <div class="set_inputs">
+                <div class="left_input">
+                    <label for="move">Liike: </label>
+                    <select class="set-input" name='{{ i|string + "move" }}'>
+                        {% for move in moves %}
+                            <option value='{{ move["move_id"] }}'>{{ move["name"] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mid_input">
+                    <label for="sets">Sarjat:</label>
+                    <input id="sets" name='{{ i|string+"sets" }}' type="number" class="set-input" placeholder="8" />
+                </div>
+                <div class="right_input">
+                    <label for="amount">Toistot (sarjassa):</label>
+                    <input id="amount" name='{{ i|string + "amount" }}' type="number" class="set-input" placeholder="8" />
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="button_primary save_button">Tallenna</button>
+    </form>
+{% endblock %}

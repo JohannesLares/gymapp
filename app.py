@@ -13,6 +13,7 @@ app.secret_key = getenv("SECRET_KEY")
 from db import db
 import user
 import moves
+import plans
 
 @app.route("/")
 def index():
@@ -87,3 +88,36 @@ def edit_move(move_id):
             public = request.form["public"]
         res = moves.edit_one(move_id, name, desc, public)
         return redirect("/move/"+str(move_id))
+
+@app.route("/plans")
+def get_plans():
+    if not user.is_logged_in():
+        return redirect("/")
+    return render_template("plans.html", plans=plans.get_all())
+
+@app.route("/plan/<int:plan_id>")
+def get_plan(plan_id):
+    if not user.is_logged_in():
+        return redirect("/")
+    plan = plans.get_one(plan_id)
+    return render_template("plan.html", info=plans.get_info(plan_id), sets=plans.get_one(plan_id))
+
+@app.route("/newplan", methods=["GET", "POST"])
+def new_plan():
+    if not user.is_logged_in():
+        return redirect("/")
+    if request.method == "GET":
+        return render_template("newplan.html")
+    else:
+        res = plans.create_new_plan(request.form["name"], request.form["desc"])
+        return redirect("/newplan/"+str(res)+"/"+str(request.form["amount"]))
+
+@app.route("/newplan/<int:plan_id>/<int:move_count>", methods=["GET", "POST"])
+def add_moves_to_plan(plan_id, move_count):
+    if not user.is_logged_in():
+        return redirect("/")
+    if request.method == "GET":
+        return render_template("editsetsonplan.html", plan_id=plan_id, count=move_count, moves=moves.get_all())
+    else:
+        plans.add_sets_to_new_plan(request.form, move_count, plan_id)
+        return redirect("/plan/"+str(plan_id))

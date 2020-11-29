@@ -29,4 +29,10 @@ Testaamaan pääsee tästä linkistä [gymapp-l](http://gymapp-l.herokuapp.com)
 
 ### Työn edistyminen
 
+#### 2. palautus
+
 Työn alku on edistynyt kohtuu hitaasti, koska python on täysin vieras kieli. Tällä hetkellä pystyy rekisteröityä käyttäjäksi ja pystyy lisäämään liikkeitä ja niitä pystyy katselemaan. Myöskin sisään pystyy kirjautumaan. Myöskin eri taulut on suunniteltu. Ilmeisesti tähän asti tehdyt SQL kyselyt on injection-proof. Koska python on niin vieras kieli, niin kaikki moneen fileen refaktorointi ym. tulee menemään varmaankin kurssin loppupuolelle. Priorisoituna nyt käytettävyys ja toimmallisuus.
+
+#### 3. palautus
+
+Työhön on lisätty loputkin tietokantataulut ja näitä hyödyntäviä toiminnallisuuksia on lisätty. Ohjelmaa on myös rikottu selkeämpiin osiin, kuten html templateen ja python tiedostoja on rikottu yhtä asiaa hoitaviin tiedostoihin. Nyt siis voi tehdä erilaisia sarjayhdistelmiä, eli enää vain treenin aikana oleva toiminnallisuus. Myös lomakkeisiin pitäisi lisätä CSRF- haavoittuvuutta estävä toiminnallisuus. 

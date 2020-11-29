@@ -31,4 +31,32 @@
 .save_button {
     background-color: #2e7fff;
     color: white;
+    display: block;
+}
+
+.add_button {
+    background-color: blueviolet;
+    color: white;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.set_inputs {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.left_input, .right_input, .mid_input {
+    display: inline-block;
+}
+.left_input {
+    margin: 0 10px;
+}
+
+.set-input {
+    height: 35px;
+    padding: 0 4px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 300px;
 }

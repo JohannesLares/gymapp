@@ -1,6 +1,8 @@
 {% extends "logged_layout.html" %}
 {% block title %}LIIKKEET{% endblock %}
 {% block content %}
+
+    <a href="/newmove" class="link_button">Uusi liike</a>
     <table class="main_table">
         <thead>
             <tr>
@@ -12,12 +14,12 @@
             {% for move in moves %}
                 <tr>
                     <td>
-                        <a href="{{ url_for('move', move_id=move[0]) }}">
-                            {{ move[1] }}
+                        <a href="{{ url_for('move', move_id=move['move_id']) }}">
+                            {{ move["name"] }}
                         </a>
                     </td>
                     <td>
-                        {{ move[2] }}
+                        {{ move["public"] }}
                     </td>
                 </tr>
             {% endfor %}

@@ -1,0 +1,28 @@
+{% extends "logged_layout.html" %}
+{% block title %}
+Uusi treenisuunnitelma
+{% endblock %}
+{% block content %}
+    <form action="/newplan" method="POST">
+        <div class="input_group">
+            <label for="name">
+                Suunnitelman nimi
+            </label>
+            <input id="name" name="name" type="text" class="text-input" placeholder="Vetävät, työntävät, kädet, jalat ym." />
+        </div>
+        <div class="input_group">
+            <label for="desc">
+                Kuvaus
+            </label>
+            <textarea id="desc" name="desc" type="text" class="textarea-input"></textarea>
+        </div>
+        <div class="input_group">
+            <label for="amount">
+                Liikesarjojen määrä
+            </label>
+            <input id="amount" name="amount" type="number" class="text-input" />
+        </div>
+        <button type="submit" class="button_primary save_button">Seuraava</button>
+    </form>
+    <p class="success alert">{{ message }}</p>
+{% endblock %}

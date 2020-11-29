@@ -1,0 +1,29 @@
+{% extends "logged_layout.html" %}
+{% block title %}
+Omat treenisuunnitelmat
+{% endblock %}
+{% block content %}
+    <a href="/newplan" class="link_button">Uusi suunnitelma</a>
+    {% if plans|length > 0 %}
+    <table class="main_table">
+        <thead>
+            <tr>
+                <th>Nimi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in plans %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('get_plan', plan_id=plan['plan_id']) }}">
+                            {{ plan["name"] }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Sinulla ei ole yhtään treenisuunnitelmaa</p>
+    {% endif %}
+{% endblock %}

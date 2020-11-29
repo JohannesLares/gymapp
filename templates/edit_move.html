@@ -1,4 +1,7 @@
 {% extends "logged_layout.html" %}
+{% block title %}
+Muokkaa liikettä
+{% endblock %}
 {% block content %}
 <form action={{ url_for("edit_move", move_id=move["move_id"]) }} method="POST">
     <div class="input_group">

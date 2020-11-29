@@ -1,0 +1,27 @@
+{% extends "logged_layout.html" %}
+{% block title %}
+{{ info[0] }}
+{% endblock %}
+{% block content %}
+<p>{{info[2]}}</p>
+    <table class="main_table">
+        <thead>
+            <tr>
+                <th>Liike</th>
+                <th>Toistot</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for set in sets %}
+                <tr>
+                    <td>
+                        {{ set[0] }}
+                    </td>
+                    <td>
+                        {{ set[2] }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
