@@ -19,6 +19,7 @@
             </label>
             <input id="public" name="public" type="checkbox" class="checkbox-input" />
         </div>
+        <input type="hidden" name="csrf" value="{{ session.csrf }}">
         <button type="submit" class="button_primary save_button">Tallenna</button>
     </form>
     <p class="success alert">{{ message }}</p>

@@ -16,6 +16,15 @@
     width: 100%;
 }
 
+.place-input {
+    height: 35px;
+    padding: 0 4px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 5ch;
+    text-align: right;
+}
+
 .textarea-input {
     border-radius: 5px;
     width: 100%;
@@ -32,6 +41,27 @@
     background-color: #2e7fff;
     color: white;
     display: block;
+}
+
+.move_button {
+    margin-left: 5px;
+    color: white;
+    background-color: #2e7fff;
+}
+
+.delete_button {
+    color: white;
+    background-color: rgb(208, 21, 0);
+}
+
+.button_primary:disabled {
+    cursor: not-allowed;
+    color: #444;
+    background-color: #aaa;
+}
+
+.button_primary:disabled:hover {
+    box-shadow: none;
 }
 
 .add_button {

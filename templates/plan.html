@@ -3,22 +3,96 @@
 {{ info[0] }}
 {% endblock %}
 {% block content %}
+<script>
+    function remove_one(set_id) {
+        var fd = new FormData();
+        fd.append("csrf", "{{ session.csrf }}")
+        fd.append("set_id", set_id)
+        const response = fetch("/deletefromplan", {
+            method: "POST",
+            credentials: "same-origin",
+            body: fd
+        })
+        .then(res => {
+            document.getElementById(set_id).remove()
+            alert("Poistettu")
+        })
+        .catch(e => console.log(e))
+    }
+
+    window.onload = function() {
+        localStorage.removeItem("moving", false)
+        let inputs = document.getElementsByClassName("place-input")
+        let max = 0
+        for (var i = 0; i < inputs.length; i++) {
+            max = Math.max(max, parseInt(inputs[i].value))
+            console.log(max, inputs[i])
+        }
+        for (i = 0; i < inputs.length; i++) {
+            inputs[i].setAttribute("max", max)
+            inputs[i].addEventListener("input", function(e) {
+                let v = e.target.value
+                let init = e.target.dataset.initposition
+                let rowid = e.target.dataset.rowid
+                console.log(init, v)
+                if (init !== v) {
+                    if (localStorage.getItem("moving") && localStorage.getItem("moving") !== rowid) {
+                        alert("Siirräthän vain yhtä kerrallaan")
+                        document.getElementById("input"+rowid).value = init
+                    } else {
+                        document.getElementById("button"+rowid).removeAttribute("disabled")
+                        localStorage.setItem("moving", rowid)
+                    }
+                } else {
+                    localStorage.removeItem("moving")
+                    document.getElementById("button"+rowid).setAttribute("disabled", true)
+                }
+            })
+        }
+    }
+
+    function move(rowid) {
+        var fd = new FormData()
+        var pos = document.getElementById("input"+rowid).value
+        fd.append("csrf", "{{ session.csrf }}")
+        fd.append("set_id", rowid)
+        fd.append("new_position", pos)
+        const res = fetch("/editplacing", {
+            method: "POST",
+            credentials: "same-origin",
+            body: fd
+        })
+        .then(r => window.location.reload())
+        .catch((err) => {
+            alert("Tapahtui virhe siirrettäessä")
+        })
+    }
+</script>
 <p>{{info[2]}}</p>
     <table class="main_table">
         <thead>
             <tr>
                 <th>Liike</th>
                 <th>Toistot</th>
+                <th>Poista</th>
+                <th>Järjestys</th>
             </tr>
         </thead>
         <tbody>
             {% for set in sets %}
-                <tr>
+                <tr id="{{set[3]}}">
                     <td>
                         {{ set[0] }}
                     </td>
                     <td>
                         {{ set[2] }}
+                    </td>
+                    <td>
+                        <button onclick='remove_one( {{ set[3] }} )' class="button_primary delete_button">Poista</button>
+                    </td>
+                    <td>
+                        <input type="number" value='{{ set[1] }}' class="place-input" min="1" id='{{ "input" + set[3]|string }}' data-initposition="{{ set[1] }}" data-rowid="{{ set[3] }}" />
+                        <button id='{{ "button" + set[3]|string }}' onclick="move( {{ set[3] }} )" class="button_primary move_button" disabled >Siirrä</button>
                     </td>
                 </tr>
             {% endfor %}

@@ -22,6 +22,7 @@ Uusi treenisuunnitelma
             </label>
             <input id="amount" name="amount" type="number" class="text-input" />
         </div>
+        <input type="hidden" name="csrf" value="{{ session.csrf }}">
         <button type="submit" class="button_primary save_button">Seuraava</button>
     </form>
     <p class="success alert">{{ message }}</p>
