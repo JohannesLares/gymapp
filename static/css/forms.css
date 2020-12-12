@@ -95,3 +95,7 @@
     border-color: #cf2727;
     box-shadow: 0 0 2px #cf2727;
 }
+
+.select-margin {
+    margin-bottom: 10px;
+}

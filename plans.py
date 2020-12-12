@@ -11,7 +11,7 @@ def create_new_plan(name, desc):
     return return_obj["plan_id"]
 
 def get_all():
-    sql = "SELECT * FROM plans WHERE user_id=:id"
+    sql = "SELECT * FROM plans WHERE user_id=:id AND training='f'"
     res = db.session.execute(sql, {"id": user.get_id()})
     return res.fetchall() 
 
@@ -50,11 +50,18 @@ def get_one(plan_id):
     return(res)
 
 def get_info(plan_id):
-    sql = "SELECT name, user_id, description FROM plans WHERE plan_id=:pid"
+    sql = "SELECT name, user_id, description, plan_id FROM plans WHERE plan_id=:pid"
     result = db.session.execute(sql, {"pid": plan_id})
     res = result.fetchone()
     if res.user_id != user.get_id():
         return None
+    return res
+
+def get_users_plans():
+    sql = "SELECT plan_id, name FROM plans WHERE user_id=:uid AND training='f'"
+    result = db.session.execute(sql, {"uid": user.get_id()})
+    res = result.fetchall()
+    print(res)
     return res
 
 def rearrange_on_delete(plan_id):
@@ -71,7 +78,7 @@ def rearrange_on_delete(plan_id):
     return
 
 def move_set(sid, new_place):
-    res = db.session.execute("SELECT * FROM set WHERE set_id=:set_id AND user_id=:uid", {"set_id": sid, "uid": user.get_id()})
+    res = db.session.execute("SELECT place, plan_id FROM set WHERE set_id=:set_id AND user_id=:uid", {"set_id": sid, "uid": user.get_id()})
     row = res.fetchone()
     if not row["place"]:
         return False
@@ -91,3 +98,9 @@ def move_set(sid, new_place):
         db.session.commit()
         return True
     return False
+
+def delete_plan(plan_id):
+    db.session.execute("DELETE FROM set WHERE plan_id=:pid AND user_id=:uid", {"pid": plan_id, "uid": user.get_id()})
+    db.session.execute("DELETE FROM plans WHERE plan_id=:pid AND user_id=:uid", {"pid": plan_id, "uid": user.get_id()})
+    db.session.commit()
+    return

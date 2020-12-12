@@ -67,8 +67,26 @@
             alert("Tapahtui virhe siirrettäessä")
         })
     }
+
+    function deleteThis() {
+        if (confirm("Oletko aivan varma?")) {
+            var fd = new FormData()
+            fd.append("csrf", "{{ session.csrf }}")
+            fd.append("plan_id", "{{ info[3] }}")
+            const res = fetch("/deleteplan", {
+                method: "POST",
+                credentials: "same-origin",
+                body: fd
+            })
+            .then(r => window.location.href = "/plans")
+            .catch((err) => {
+                alert("Tapahtui virhe poistettaessa")
+            })
+        }
+    }
 </script>
 <p>{{info[2]}}</p>
+<button class="button_primary delete_button" onclick="deleteThis()">Poista suunnitelma</button>
     <table class="main_table">
         <thead>
             <tr>

@@ -12,6 +12,8 @@ CREATE TABLE plans (
     name TEXT,
     description TEXT,
     user_id INT NOT NULL,
+    training BOOLEAN DEFAULT 'f',
+    copyof INT,
     CONSTRAINT fk_user
         FOREIGN KEY(user_id)
             REFERENCES users(user_id)

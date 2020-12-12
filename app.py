@@ -14,6 +14,7 @@ from db import db
 import user
 import moves
 import plans
+import training
 
 @app.route("/")
 def index():
@@ -160,6 +161,60 @@ def edit_set_placing_on_plan():
     if plans.move_set(request.form["set_id"], request.form["new_position"]):
         return "Success", 200
     return "Error", 500
+
+@app.route("/deleteplan", methods=["POST"])
+def delete_plan():
+    if not user.is_logged_in():
+        return "Fail", 403
+    if not user.check_csrf(request.form["csrf"]):
+        return "Fail", 400
+    plans.delete_plan(request.form["plan_id"])
+    return "Success", 200
+
+@app.route("/train")
+def prepare_training():
+    if not user.is_logged_in():
+        return redirect("/403")
+    return render_template("preparetraining.html", plans=plans.get_users_plans())
+
+@app.route("/train/<int:plan_id>/<int:position>")
+def train_page(plan_id, position):
+    if not user.is_logged_in():
+        return redirect("/403")
+    if position > training.get_len(plan_id):
+        return redirect("/400")
+    return render_template("train.html", data=training.get_content(plan_id, position), position=position, plan=plan_id, is_last=training.is_last(plan_id, position))
+
+@app.route("/nextmove", methods=["POST"])
+def next_move():
+    if not user.is_logged_in():
+        return redirect("/403")
+    if not user.check_csrf(request.form["csrf"]):
+        return redirect("/400")
+    rf = request.form
+    nextpos = training.next_move(rf["plan_id"], rf["position"], rf["move_id"], rf["reps"], rf["weight"], rf["desc"])
+    return redirect("/train/"+ str(rf["plan_id"]) +"/" + str(nextpos))
+    
+@app.route("/start", methods=["POST"])
+def start_training():
+    if not user.is_logged_in():
+        return redirect("/403")
+    if not user.check_csrf(request.form["csrf"]):
+        return redirect("/400")
+    new_training = training.initialize_new_training(request.form["plan_id"])
+    if new_training:
+        return redirect("/train/"+ str(new_training) +"/1")
+    return redirect("/400")
+
+@app.route("/pasttrainings")
+def get_trainings():
+    if not user.is_logged_in():
+        return redirect("/403")
+    return render_template("oldtrainings.html", trainings=training.get_olds())
+
+@app.route("/training/<int:tid>")
+def get_training(tid):
+    return redirect("/")
 
 @app.route("/403")
 def access_denied():

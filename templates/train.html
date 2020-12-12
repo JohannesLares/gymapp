@@ -1,0 +1,36 @@
+{% extends "logged_layout.html" %}
+{% block title %}
+Liike: {{ data[10] }}
+{% endblock %}
+{% block content %}
+    <p>{{ data[13] }}</p>
+    <form action="/nextmove" method="POST">
+        <div class="input_group">
+            <label for="reps">
+                Toistot
+            </label>
+            <input id="reps" name="reps" type="number" class="text-input" step="1" min="1" value="{{ data[8] }}" />
+        </div>
+        <div class="input_group">
+            <label for="weight">
+                Paino
+            </label>
+            <input id="weight" name="weight" type="number" class="text-input" step="0.01" min="0.00" placeholder="0.00" />
+        </div>
+        <div class="input_group">
+            <label for="desc">
+                Kuvaus
+            </label>
+            <textarea id="desc" name="desc" type="text" class="textarea-input"></textarea>
+        </div>
+        <input type="hidden" name="plan_id" value="{{ plan }}">
+        <input type="hidden" name="position" value="{{ position }}">
+        <input type="hidden" name="move_id" value="{{ data[3] }}">
+        <input type="hidden" name="csrf" value="{{ session.csrf }}">
+        {% if is_last %}
+            <button type="submit" class="button_primary save_button">Lopeta</button>
+        {% else %}
+            <button type="submit" class="button_primary save_button">Seuraava liike</button>
+        {% endif %}
+    </form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "logged_layout.html" %}
+{% block title %}
+Valitse treeniohjelmasi
+{% endblock %}
+{% block content %}
+    {% if plans %}
+    <form action="/start" method="POST">
+        <select class="set-input select-margin" name="plan_id">
+            {% for plan in plans %}
+                <option value='{{ plan[0] }}'>{{ plan[1] }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="csrf" value="{{ session.csrf }}">
+        <button type="submit" class="button_primary save_button">Aloita</button>
+    </form>
+    {% else %}
+        <p>Sinulla ei ole yhtään treenisuunnitelmaa, käy luomassa semmoinen täältä: <a href="/newplan">click</a></p>
+    {% endif %}
+{% endblock %}

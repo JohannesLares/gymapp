@@ -1,0 +1,29 @@
+{% extends "logged_layout.html" %}
+{% block title %}
+Menneet treenini
+{% endblock %}
+{% block content %}
+<a href="/train" class="link_button">Aloita treeni</a>
+{% if trainings %}
+<table class="main_table" summary="Treenisuunnitelmat">
+    <thead>
+        <tr>
+            <th>Nimi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for training in trainings %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('get_training', tid=training['plan_id']) }}">
+                        {{ training["name"] }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Sinulla ei ole yhtään edellistä treeniä</p>
+{% endif %}
+{% endblock %}
