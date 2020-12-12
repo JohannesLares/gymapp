@@ -3,12 +3,32 @@
 Uusi treenisuunnitelma
 {% endblock %}
 {% block content %}
-    <form action="/newplan" method="POST">
+<script>
+    function validate() {
+        var flag = true
+        var msg = document.getElementById("msg")
+        var name = document.getElementById("name")
+        var amount = document.getElementById("amount")
+        msg.textContent = ""
+        if (name.value.length < 3) {
+            msg.textContent = "Nimen oltava vähintään 3 merkkiä. "
+            name.classList.add("input-error")
+            flag = false
+        }
+        if (amount.value < 1) {
+            msg.textContent = msg.textContent + "Liikesarjoja oltava ainakin yksi"
+            amount.classList.add("input-error")
+            flag = false
+        }
+        return flag
+    }
+</script>
+    <form action="/newplan" method="POST" onsubmit="return validate()">
         <div class="input_group">
             <label for="name">
                 Suunnitelman nimi
             </label>
-            <input id="name" name="name" type="text" class="text-input" placeholder="Vetävät, työntävät, kädet, jalat ym." />
+            <input id="name" name="name" type="text" class="text-input" placeholder="Vetävät, työntävät, kädet, jalat ym." minlength="3" />
         </div>
         <div class="input_group">
             <label for="desc">
@@ -20,10 +40,10 @@ Uusi treenisuunnitelma
             <label for="amount">
                 Liikesarjojen määrä
             </label>
-            <input id="amount" name="amount" type="number" class="text-input" />
+            <input id="amount" name="amount" type="number" class="text-input" min="1" />
         </div>
         <input type="hidden" name="csrf" value="{{ session.csrf }}">
         <button type="submit" class="button_primary save_button">Seuraava</button>
     </form>
-    <p class="success alert">{{ message }}</p>
+    <p class="success alert" id="msg">{{ message }}</p>
 {% endblock %}

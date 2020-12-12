@@ -18,7 +18,7 @@ import plans
 @app.route("/")
 def index():
     if session.get("logged_in") :
-        return render_template("index.html")
+        return render_template("index.html", noplans=True)
     else :
         return render_template("login.html")
 

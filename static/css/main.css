@@ -20,8 +20,12 @@ body {
     font-weight: 100;
 }
 
-.button_primary:hover {
+.button_primary:hover, .link_button:hover {
     box-shadow: 0 0 3px grey;
+}
+
+.link_button:hover, .save_button:hover {
+    background-color: #082d68;
 }
 
 .link_button {
@@ -37,7 +41,7 @@ body {
 }
 
 .link_wrapper {
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .alert {
@@ -101,4 +105,27 @@ body {
 
 .main_table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
+}
+
+.welcome {
+    margin: 20px;
+}
+
+.welcome_button {
+    border-radius: 5px;
+    padding: 15px;
+    min-width: 75px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 200;
+    background-color: #4287f5;
+    text-decoration: none;
+    margin: 20px;
+    color: white;
+}
+
+.welcome_button:hover {
+    box-shadow: 0 0 8px grey;
+    background-color: #082d68;
 }

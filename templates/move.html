@@ -7,12 +7,12 @@
     {% endif %}
     {% if move["own"] %}
         <div class="link_wrapper">
-            <a href={{ url_for("edit_move", move_id=move["move_id"]) }} class="link_button save_button" >Muokkaa</a>
-            <form action="{{ url_for('delete_move') }}" method="POST">
-                <input type="hidden" name="csrf" value="{{ session.csrf }}">
-                <input type="hidden" name="move_id" value="{{ move['move_id'] }}" />
-                <button type="submit" class="button_primary delete_button">Poista</button>
-            </form>
+            <a href={{ url_for("edit_move", move_id=move["move_id"]) }} class="link_button" >Muokkaa</a>
         </div>
+        <form action="{{ url_for('delete_move') }}" method="POST">
+            <input type="hidden" name="csrf" value="{{ session.csrf }}">
+            <input type="hidden" name="move_id" value="{{ move['move_id'] }}" />
+            <button type="submit" class="button_primary delete_button">Poista</button>
+        </form>
     {% endif %}
 {% endblock %}

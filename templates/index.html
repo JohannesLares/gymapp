@@ -1,7 +1,18 @@
 {% extends "logged_layout.html" %}
-{% block title %}LIIKKEET{% endblock %}
+{% block title %}
+{% if noplans %}
+TERVETULOA
+{% else %}
+LIIKKEET
+{% endif %}
+{% endblock %}
 {% block content %}
-
+    {% if noplans %}
+    <div class="welcome">
+        <a href="/plans" class="welcome_button">OMAT SUUNNITELMAT</a>
+        <a href="/train" class="welcome_button">ALOITA TREENI</a>
+    </div>
+    {% else %}
     <a href="/newmove" class="link_button">Uusi liike</a>
     <table class="main_table">
         <thead>
@@ -25,4 +36,5 @@
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 {% endblock %}

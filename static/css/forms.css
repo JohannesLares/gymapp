@@ -90,3 +90,8 @@
     border-radius: 5px;
     width: 300px;
 }
+
+.input-error {
+    border-color: #cf2727;
+    box-shadow: 0 0 2px #cf2727;
+}
