@@ -1,8 +1,10 @@
 from db import db
 from app import app
+from os import urandom
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import session
+import re
 
 def is_admin():
     sql = "SELECT admin FROM users WHERE user_id=:id"
@@ -13,9 +15,15 @@ def is_admin():
 def create_new(username, password, verify, email):
     error = ""
     if password != verify:
-        error = "salasanat eivät ole samat"
+        error = "salasanat eivät ole samat. "
     if len(password) < 6:
-        error = "salasana liian lyhyt"
+        error = "salasana liian lyhyt. "
+    if len(username) < 3:
+        error = "Käyttäjätunnus liian lyhyt. "
+    if not re.match("^[0-9a-öA-Ö_-]*$", username):
+        error = "Käyttäjätunnuksessa pitää olla vain kirjaimia ja numeroita. "
+    if len(email) < 6:
+        error = "Sähköposti liian lyhyt. "
     hash_value = generate_password_hash(password)
     if error != "":
         return error
@@ -42,6 +50,7 @@ def login(username, password):
             db.session.commit()
             session["logged_in"] = True
             session["id"] = user[1]
+            session["csrf"] = urandom(16).hex()
             return ""
         else:
             return "Käyttäjä tai salasana väärin"
@@ -55,3 +64,9 @@ def get_id():
     if session.get("id"):
         return session["id"]
     return None
+
+def check_csrf(token):
+    if session.get("csrf"):
+        if token == session.get("csrf"):
+            return True
+    return False

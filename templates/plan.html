@@ -3,22 +3,43 @@
 {{ info[0] }}
 {% endblock %}
 {% block content %}
+<script>
+    function remove_one(set_id) {
+        var fd = new FormData();
+        fd.append("csrf", "{{ session.csrf }}")
+        fd.append("set_id", set_id)
+        const response = fetch("/deletefromplan", {
+            method: "POST",
+            credentials: "same-origin",
+            body: fd
+        })
+        .then(res => {
+            document.getElementById(set_id).remove()
+            alert("Poistettu")
+        })
+        .catch(e => console.log(e))
+    }
+</script>
 <p>{{info[2]}}</p>
     <table class="main_table">
         <thead>
             <tr>
                 <th>Liike</th>
                 <th>Toistot</th>
+                <th>Poista</th>
             </tr>
         </thead>
         <tbody>
             {% for set in sets %}
-                <tr>
+                <tr id="{{set[3]}}">
                     <td>
                         {{ set[0] }}
                     </td>
                     <td>
                         {{ set[2] }}
+                    </td>
+                    <td>
+                        <button onclick='remove_one( {{ set[3] }} )' class="button_primary delete_button">Poista</button>
                     </td>
                 </tr>
             {% endfor %}

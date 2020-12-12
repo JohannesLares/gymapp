@@ -43,3 +43,9 @@ def edit_one(move_id, name, description, public):
     db.session.execute(sql, {"name": name, "description": description, "public": public, "move_id": move_id, "user_id": user.get_id()})
     db.session.commit()
     return True
+
+def delete_one(move_id):
+    sql = "DELETE FROM moves WHERE move_id=:move_id AND user_id=:user_id"
+    db.session.execute(sql, {"move_id": move_id, "user_id": user.get_id()})
+    db.session.commit()
+    return True

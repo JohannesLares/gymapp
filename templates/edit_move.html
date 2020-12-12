@@ -24,6 +24,7 @@ Muokkaa liikettä
         <input id="public" name="public" type="checkbox" {% if move["public"] %}checked{% endif  %} class="checkbox-input" />
     </div>
     {% endif %}
+    <input type="hidden" name="csrf" value="{{ session.csrf }}">
     <button type="submit" class="button_primary save_button">Tallenna</button>
 </form>
 <p class="success alert">{{ message }}</p>

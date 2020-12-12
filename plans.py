@@ -30,11 +30,16 @@ def add_sets_to_new_plan(sets, amount, plan_id):
     db.session.commit()
     return True
 
+def delete_set(set_id):
+    sql = "DELETE FROM set WHERE set_id=:set_id AND user_id=:user_id"
+    res = db.session.execute(sql, {"set_id": set_id, "user_id": user.get_id()})
+    db.session.commit()
+    return True
+
 def get_one(plan_id):
-    sql = "SELECT moves.name, set.place, set.reps FROM set INNER JOIN moves ON moves.move_id=set.move_id WHERE set.plan_id=:pid AND set.user_id=:uid ORDER BY set.place ASC"
+    sql = "SELECT moves.name, set.place, set.reps, set.set_id FROM set INNER JOIN moves ON moves.move_id=set.move_id WHERE set.plan_id=:pid AND set.user_id=:uid ORDER BY set.place ASC"
     result = db.session.execute(sql, {"pid": plan_id, "uid": user.get_id()})
     res = result.fetchall()
-    print(res)
     return(res)
 
 def get_info(plan_id):

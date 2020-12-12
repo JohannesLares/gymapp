@@ -27,6 +27,7 @@ Uusi treenisuunnitelma
             </div>
         </div>
         {% endfor %}
+        <input type="hidden" name="csrf" value="{{ session.csrf }}">
         <button type="submit" class="button_primary save_button">Tallenna</button>
     </form>
 {% endblock %}

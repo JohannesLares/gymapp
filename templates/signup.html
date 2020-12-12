@@ -14,31 +14,43 @@
                     <label for="username">
                         Käyttäjänimi
                     </label>
-                    <input id="username" name="username" type="text" class="text-input" />
+                    <input id="username" name="username" type="text" minlength="3" class="text-input" />
                 </div>
                 <div class="input_group">
                     <label for="password">
                         Salasana
                     </label>
-                    <input id="password" name="password" type="password" class="text-input" />
+                    <input id="password" name="password" type="password" minlength="6" class="text-input" />
                 </div>
                 <div class="input_group">
                     <label for="password_verify">
                         Salasana uudelleen
                     </label>
-                    <input id="password_verify" name="password_verify" type="password" class="text-input" />
+                    <input id="password_verify" name="password_verify" type="password" minlength="6" class="text-input" />
                 </div>
                 <div class="input_group">
                     <label for="email">
                         Sähköposti
                     </label>
-                    <input id="email" name="email" type="email" class="text-input" />
+                    <input id="email" name="email" type="email" class="text-input" minlength="7" />
                 </div>
                 <div class="input_group">
                     <button type="submit" class="button_primary login_button">Rekisteröidy</button>
                 </div>
             </form>
-            <p class="success alert">{{ message }}</p>
+            <script>
+                var input = document.getElementById("password_verify")
+                input.addEventListener("input", function(e) {
+                    document.getElementById("message_box").textContent = ""
+                    var pass = document.getElementById("password").value
+                    if (pass.length === e.target.value.length) {
+                        if(pass !== e.target.value) {
+                            document.getElementById("message_box").textContent = "Salasanat eivät täsmää"
+                        }
+                    }
+                })
+            </script>
+            <p class="success alert" id="message_box">{{ message }}</p>
             <span>Onko sinulla jo käyttäjä? <a href="/">Kirjaudu sisään</a></span>
         </div>
     </body>
