@@ -28,6 +28,7 @@ Koodataan webapp, joka helpottaa ja suoraviivaistaa tämän prosessin seuraavast
   * Ylläolevan listan asiatr poislukien:
     * Kesken treenin voi lisätä lisää liikkeitä
     * Järjestystä voi muuttaa kesken treenin
+    * Mobiiliystävällisyys
 
 ### Heroku
 
