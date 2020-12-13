@@ -25,16 +25,24 @@ Koodataan webapp, joka helpottaa ja suoraviivaistaa tämän prosessin seuraavast
 
 ### Mitä tuli/ei tullut tehtyä
 
-  * Ylläolevan listan asiatr poislukien:
+  * Ylläolevan listan asiat poislukien:
     * Kesken treenin voi lisätä lisää liikkeitä
     * Järjestystä voi muuttaa kesken treenin
     * Mobiiliystävällisyys
+  * Treenihistorian näkee sovelluksesta
 
-### Heroku
+### Heroku ja sielä testaaminen
 
 Testaamaan pääsee tästä linkistä [gymapp-l](http://gymapp-l.herokuapp.com)
 
-### Työn edistyminen
+Luo käyttäjä, kirjaudu sisään. Voit lisätä liikkeitä kohdassa Liikkeet => Luo uusi. Voit lisätä treenisuunnitelmia kohdasta Treenisuunnitelmat => Luo uusi. Sovellus kyllä ilmoittaa, jos jotain puuttuu (paitsi treenisuunnitelmaa luodessa ei ilmoityeta mahd puuttuvista liikkeistä, koska on jo joitain julkisia liikkeitä)
+
+## Vaatimukset
+
+  * Sovellus toimii vain HTML5:llä
+  * Sovellus vaatii javascriptin
+
+## Työn edistyminen
 
 #### 2. palautus
 
