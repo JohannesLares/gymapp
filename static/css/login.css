@@ -44,3 +44,8 @@
     background-color: #2e7fff;
     color: white;
 }
+
+.input-error {
+    border-color: #cf2727 !important;
+    box-shadow: 0 0 2px #cf2727;
+}

@@ -27,12 +27,14 @@
             </label>
             <textarea id="desc" name="desc" type="text" class="textarea-input"></textarea>
         </div>
+        {% if admin %}
         <div class="input_group">
             <label for="public" class="checkbox-label">
                 Julkinen
             </label>
             <input id="public" name="public" type="checkbox" class="checkbox-input" />
         </div>
+        {% endif %}
         <input type="hidden" name="csrf" value="{{ session.csrf }}">
         <button type="submit" class="button_primary save_button">Tallenna</button>
     </form>

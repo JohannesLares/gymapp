@@ -4,6 +4,7 @@ Liike: {{ data[10] }}
 {% endblock %}
 {% block content %}
     <p>{{ data[13] }}</p>
+    <h4>Liike {{ position }}/{{ len }}</h4>
     <form action="/nextmove" method="POST">
         <div class="input_group">
             <label for="reps">
@@ -15,7 +16,7 @@ Liike: {{ data[10] }}
             <label for="weight">
                 Paino
             </label>
-            <input id="weight" name="weight" type="number" class="text-input" step="0.01" min="0.00" placeholder="0.00" />
+            <input id="weight" name="weight" type="number" class="text-input" step="0.01" min="0.00" placeholder="0.00" value="{{ recommendations[0] }}" />
         </div>
         <div class="input_group">
             <label for="desc">

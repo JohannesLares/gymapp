@@ -76,7 +76,7 @@ def newmove():
         if "public" in request.form:
             public = request.form["public"]
         res = moves.create_new(name, desc, public)
-        return render_template("newmove.html", message=res)
+        return render_template("newmove.html", message=res, admin=user.is_admin())
 
 @app.route("/editmove/<int:move_id>", methods=["GET", "POST"])
 def edit_move(move_id):
@@ -181,9 +181,9 @@ def prepare_training():
 def train_page(plan_id, position):
     if not user.is_logged_in():
         return redirect("/403")
-    if position > training.get_len(plan_id):
+    if training.is_over(plan_id, position):
         return redirect("/400")
-    return render_template("train.html", data=training.get_content(plan_id, position), position=position, plan=plan_id, is_last=training.is_last(plan_id, position))
+    return render_template("train.html", data=training.get_content(plan_id, position), position=position, len=training.get_len(training.get_original_id(plan_id)), plan=plan_id, is_last=training.is_last(plan_id, position), recommendations=training.get_weight_and_reps_recommendation(plan_id, position))
 
 @app.route("/nextmove", methods=["POST"])
 def next_move():
@@ -193,6 +193,8 @@ def next_move():
         return redirect("/400")
     rf = request.form
     nextpos = training.next_move(rf["plan_id"], rf["position"], rf["move_id"], rf["reps"], rf["weight"], rf["desc"])
+    if training.is_over(rf["plan_id"], nextpos):
+        return redirect("/")
     return redirect("/train/"+ str(rf["plan_id"]) +"/" + str(nextpos))
     
 @app.route("/start", methods=["POST"])
@@ -202,9 +204,7 @@ def start_training():
     if not user.check_csrf(request.form["csrf"]):
         return redirect("/400")
     new_training = training.initialize_new_training(request.form["plan_id"])
-    if new_training:
-        return redirect("/train/"+ str(new_training) +"/1")
-    return redirect("/400")
+    return redirect("/train/"+ str(new_training) +"/1")
 
 @app.route("/pasttrainings")
 def get_trainings():
@@ -214,7 +214,9 @@ def get_trainings():
 
 @app.route("/training/<int:tid>")
 def get_training(tid):
-    return redirect("/")
+    if not user.is_logged_in():
+        return redirect("/403")
+    return render_template("oldtraining.html", data=training.get_old_training(tid), info=plans.get_info(tid))
 
 @app.route("/403")
 def access_denied():

@@ -34,7 +34,7 @@ def create_new(username, password, verify, email):
     except IntegrityError:
         db.session.rollback()
         return "Käyttäjätunnus tai sähköpostiosoite on jo käytössä"
-    return "Success"
+    return "Rekisteröinti onnistui"
 
 def login(username, password): 
     sql = "SELECT password, user_id FROM users WHERE username=:username"

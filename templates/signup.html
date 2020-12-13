@@ -4,12 +4,45 @@
         <title>Gymapp | made by Lares</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     </head>
+    <script>
+        function validate() {
+            var flag = true
+            var msg = document.getElementById("message_box")
+            var name = document.getElementById("username")
+            var pass = document.getElementById("password")
+            var passv = document.getElementById("password_verify")
+            var email = document.getElementById("email")
+            msg.textContent = ""
+            if (name.value.length < 3) {
+                msg.textContent = "Käyttäjänimen oltava vähintään 3 merkkiä. "
+                name.classList.add("input-error")
+                flag = false
+            }
+            if (pass.value.length < 6) {
+                msg.textContent = msg.textContent + "Salasanan oltava vähintään 6 merkkiä. "
+                pass.classList.add("input-error")
+                flag = false
+            }
+            if (email.value.length < 3) {
+                msg.textContent = msg.textContent + "Sähköpostin oltava vähintään 7 merkkiä. "
+                email.classList.add("input-error")
+                flag = false
+            }
+            if (pass.value !== passv.value) {
+                msg.textContent = msg.textContent + "Salasanat eivät täsmää "
+                passv.classList.add("input-error")
+                flag = false
+            }
+            return flag
+        }
+    </script>
     <body class="login_bg">
         <h1 class="title">Gymapp</h1>
         <div class="login_box">
             <h2>Rekisteröidy</h2>
-            <form action="/signup" method="POST" class="form_group">
+            <form action="/signup" method="POST" class="form_group" onsubmit="return validate()">
                 <div class="input_group">
                     <label for="username">
                         Käyttäjänimi
@@ -46,6 +79,7 @@
                     if (pass.length === e.target.value.length) {
                         if(pass !== e.target.value) {
                             document.getElementById("message_box").textContent = "Salasanat eivät täsmää"
+                            input.classList.add("input-error")
                         }
                     }
                 })

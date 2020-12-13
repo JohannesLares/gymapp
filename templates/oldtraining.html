@@ -1,0 +1,54 @@
+{% extends "logged_layout.html" %}
+{% block title %}
+Mennyt treeni: {{ info[0] }}
+{% endblock %}
+{% block content %}
+<script>
+    function deleteThis() {
+        if (confirm("Oletko aivan varma?")) {
+            var fd = new FormData()
+            fd.append("csrf", "{{ session.csrf }}")
+            fd.append("plan_id", "{{ info[3] }}")
+            const res = fetch("/deleteplan", {
+                method: "POST",
+                credentials: "same-origin",
+                body: fd
+            })
+            .then(r => window.location.href = "/pasttrainings")
+            .catch((err) => {
+                alert("Tapahtui virhe poistettaessa")
+            })
+        }
+    }
+</script>
+<p>{{ data[0][3].strftime('%d.%m.%Y %H:%M') }}</p>
+<button class="button_primary delete_button" onclick="deleteThis()">Poista tämä treeni</button>
+<table class="main_table">
+    <thead>
+        <tr>
+            <th>Liike</th>
+            <th>Toistot</th>
+            <th>Paino</th>
+            <th>Kuvaus</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for training in data %}
+            <tr>
+                <td>
+                    {{ training[5] }}
+                </td>
+                <td>
+                    {{ training[4] }}
+                </td>
+                <td>
+                    {{ training[2] }}
+                </td>
+                <td>
+                    {{ training[0] }}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

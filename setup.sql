@@ -26,7 +26,7 @@ CREATE TABLE set (
     move_id INTEGER NOT NULL,
     description TEXT,
     place INT,
-    weight INT,
+    weight DECIMAL,
     time TIMESTAMP,
     reps INT,
     CONSTRAINT fk_user

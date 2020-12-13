@@ -23,6 +23,12 @@ Koodataan webapp, joka helpottaa ja suoraviivaistaa tämän prosessin seuraavast
   * Sovelluksen tulee olla mobiiliystävällinen
   * Kun liike vaihtuu, niin näkyy edellisen kerran painot ja toistot ja sarjat
 
+### Mitä tuli/ei tullut tehtyä
+
+  * Ylläolevan listan asiatr poislukien:
+    * Kesken treenin voi lisätä lisää liikkeitä
+    * Järjestystä voi muuttaa kesken treenin
+
 ### Heroku
 
 Testaamaan pääsee tästä linkistä [gymapp-l](http://gymapp-l.herokuapp.com)

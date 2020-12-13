@@ -9,6 +9,7 @@ Menneet treenini
     <thead>
         <tr>
             <th>Nimi</th>
+            <th>Alkoi</th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,9 @@ Menneet treenini
                     <a href="{{ url_for('get_training', tid=training['plan_id']) }}">
                         {{ training["name"] }}
                     </a>
+                </td>
+                <td>
+                    {{ training["time"].strftime('%d.%m.%Y %H:%M') }}
                 </td>
             </tr>
         {% endfor %}
