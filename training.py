@@ -10,7 +10,6 @@ def initialize_new_training(plan_id):
     new_plan = db.session.execute(psql, {"n": plan["name"], "d": plan["description"], "uid": user.get_id(), "cid": plan_id})
     db.session.commit()
     res = new_plan.fetchone()
-    print("MOI")
     return res[0]
 
 def get_content(pid, pos):
@@ -20,7 +19,6 @@ def get_content(pid, pos):
     result = res.fetchone()
     if not result:
         return "error"
-    print(result)
     return result
 
 def next_move(pid, pos, move_id, reps, weight, desc):
@@ -50,7 +48,6 @@ def get_olds():
     sql = "SELECT * FROM plans JOIN(SELECT DISTINCT ON (plan_id) * FROM set ORDER BY plan_id, time) AS set ON set.plan_id = plans.plan_id WHERE plans.user_id=:uid AND training='t'"
     res = db.session.execute(sql, {"uid": user.get_id()})
     result=res.fetchall()
-    print(result)
     return result
 
 def get_old_training(tid):
@@ -71,7 +68,6 @@ def get_weight_and_reps_recommendation(tid, pos):
     res = db.session.execute(sql, {"original": original, "uid": user.get_id(), "pos": pos})
     result = res.fetchone()
     mid = result[0]
-    print(mid)
     #Get latest weight
     sql = "SELECT DISTINCT ON(move_id) weight, reps FROM set WHERE user_id=:uid AND move_id=:mid AND time IS NOT NULL ORDER BY move_id, time DESC"
     res = db.session.execute(sql, {"uid": user.get_id(), "mid": mid})

@@ -63,14 +63,12 @@ def get_users_plans():
     sql = "SELECT plan_id, name FROM plans WHERE user_id=:uid AND training='f'"
     result = db.session.execute(sql, {"uid": user.get_id()})
     res = result.fetchall()
-    print(res)
     return res
 
 def rearrange_on_delete(plan_id):
     sql = "SELECT set_id, place FROM set WHERE plan_id=:pid ORDER BY place"
     exres = db.session.execute(sql, {"pid": plan_id})
     rows = exres.fetchall()
-    print(rows)
     i = 1
     for row in rows:
         if row["place"] != i:

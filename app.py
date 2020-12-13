@@ -31,7 +31,6 @@ def signup():
         return render_template("signup.html", error="")
     else :
         rf = request.form
-        print(rf)
         created_user = user.create_new(rf["username"], rf["password"], rf["password_verify"], rf["email"])
         return render_template("signup.html", message=created_user)
 
