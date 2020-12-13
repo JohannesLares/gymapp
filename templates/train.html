@@ -3,14 +3,34 @@
 Liike: {{ data[10] }}
 {% endblock %}
 {% block content %}
+<script>
+    function validate() {
+        var flag = true
+        var reps = document.getElementById("reps")
+        var weight = document.getElementById("weight")
+        var msg = document.getElementById("msg")
+        msg.textContent = ""
+        if (reps.value < 1) {
+            flag = false
+            reps.classList.add("input-error")
+            msg.textContent = "Toistoja vähintään 1. "
+        }
+        if (weight.value < 0.01) {
+            flag = false
+            weight.classList.add("input-error")
+            msg.textContent += "Painoa vähintään 0.01"
+        }
+        return flag
+    }
+</script>
     <p>{{ data[13] }}</p>
     <h4>Liike {{ position }}/{{ len }}</h4>
-    <form action="/nextmove" method="POST">
+    <form action="/nextmove" method="POST" onsubmit="return validate()">
         <div class="input_group">
             <label for="reps">
                 Toistot
             </label>
-            <input id="reps" name="reps" type="number" class="text-input" step="1" min="1" value="{{ data[8] }}" />
+            <input id="reps" name="reps" type="number" class="text-input" step="1" value="{{ data[8] }}" />
         </div>
         <div class="input_group">
             <label for="weight">
@@ -33,5 +53,6 @@ Liike: {{ data[10] }}
         {% else %}
             <button type="submit" class="button_primary save_button">Seuraava liike</button>
         {% endif %}
+        <p class="success alert" id="msg"></p>
     </form>
 {% endblock %}
