@@ -26,9 +26,9 @@ def create_new(name, desc, public):
     message = ""
     if not user.is_admin() and public != "f":
         public = "f"
-        message = "Vaihdettu julkisesta privaksi. "
+        message = "Vaihdettu julkisesta privaksi, koska et ole admin. "
     if len(name) < 3:
-        return "Nimi liian lyhyt"
+        return "Nimi liian lyhyt (min 3 merkkiä)"
     sql = "INSERT INTO moves (name, description, public, user_id) VALUES (:name,:desc,:public,:user_id)"  
     db.session.execute(sql, {"name": name, "desc": desc, "public": public, "user_id": user.get_id()})
     db.session.commit()
@@ -38,13 +38,20 @@ def edit_one(move_id, name, description, public):
     message = ""
     if not user.is_admin() and public != "f":
         public = "f"
-        message = "Vaihdettu julkisesta privaksi. "
+        message = "Vaihdettu julkisesta privaksi, koska et ole admin. "
+    if len(name) < 3:
+        return "Nimi liian lyhyt (min 3 merkkiä)"
     sql = "UPDATE moves SET name=:name, description=:description, public=:public WHERE move_id=:move_id AND user_id=:user_id"
     db.session.execute(sql, {"name": name, "description": description, "public": public, "move_id": move_id, "user_id": user.get_id()})
     db.session.commit()
     return True
 
 def delete_one(move_id):
+    sql = "SELECT name FROM moves WHERE move_id=:mid AND user_id=:uid"
+    res = db.session.execute(sql, {"move_id": move_id, "user_id": user.get_id()})
+    result = res.fetchone()
+    if not result:
+        return False
     sql = "DELETE FROM moves WHERE move_id=:move_id AND user_id=:user_id"
     db.session.execute(sql, {"move_id": move_id, "user_id": user.get_id()})
     db.session.commit()

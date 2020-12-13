@@ -3,8 +3,28 @@
 Uusi treenisuunnitelma
 {% endblock %}
 {% block content %}
+<script>
+    function validate() {
+        var flag = true
+
+        var inputs = document.getElementsByTagName("input")
+        var msg = document.getElementById("msg")
+        for (var i = 0; i < inputs.length; i++) {
+            let val = inputs[i].value
+            if (val < 1) {
+                flag = false
+                inputs[i].classList.add("input-error")
+            }
+        }
+        msg.textContent = ""
+        if (!flag) {
+            msg.textContent = "Tarkasta syötteet"
+        }
+        return flag
+    }
+</script>
     <h3>Liikesarjat (tavoitteet)</h3>
-    <form action='{{ url_for("add_moves_to_plan", plan_id=plan_id, move_count=count) }}' method="POST">
+    <form action='{{ url_for("add_moves_to_plan", plan_id=plan_id, move_count=count) }}' method="POST" onsubmit="return validate()">
         {% for i in range(count) %}
         <div id="inputs">
             <div class="set_inputs">
@@ -30,4 +50,5 @@ Uusi treenisuunnitelma
         <input type="hidden" name="csrf" value="{{ session.csrf }}">
         <button type="submit" class="button_primary save_button">Tallenna</button>
     </form>
+    <p class="success alert" id="msg"></p>
 {% endblock %}

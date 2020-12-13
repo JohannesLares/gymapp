@@ -16,6 +16,8 @@ import moves
 import plans
 import training
 
+# --- ROUTES ---
+
 @app.route("/")
 def index():
     if session.get("logged_in") :
@@ -102,6 +104,8 @@ def delete_move():
     if not user.check_csrf(request.form["csrf"]):
         return redirect("/400")
     res = moves.delete_one(request.form["move_id"])
+    if not res:
+        return redirect("/400")
     return redirect("/moves")
 
 @app.route("/plans")
@@ -114,7 +118,6 @@ def get_plans():
 def get_plan(plan_id):
     if not user.is_logged_in():
         return redirect("/403")
-    plan = plans.get_one(plan_id)
     return render_template("plan.html", info=plans.get_info(plan_id), sets=plans.get_one(plan_id))
 
 @app.route("/newplan", methods=["GET", "POST"])
@@ -129,6 +132,8 @@ def new_plan():
         if float(request.form["amount"]) < 1:
             return render_template("newplan.html", error="Liikesarjoja oltava vähintään 1")
         res = plans.create_new_plan(request.form["name"], request.form["desc"])
+        if isinstance(res, str):
+            return render_template("newplan.html", error=res)
         return redirect("/newplan/"+str(res)+"/"+str(request.form["amount"]))
 
 @app.route("/newplan/<int:plan_id>/<int:move_count>", methods=["GET", "POST"])
@@ -149,8 +154,9 @@ def delete_set_from_plan():
         return "Fail", 403
     if not user.check_csrf(request.form["csrf"]):
         return "Fail", 400
-    plans.delete_set(request.form["set_id"])
-    return "Success", 200
+    if plans.delete_set(request.form["set_id"]):
+        return "Success", 200
+    return "Fail", 400
 
 @app.route("/editplacing", methods=["POST"])
 def edit_set_placing_on_plan():

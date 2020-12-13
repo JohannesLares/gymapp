@@ -11,7 +11,7 @@ def create_new_plan(name, desc):
     return return_obj["plan_id"]
 
 def get_all():
-    sql = "SELECT * FROM plans WHERE user_id=:id AND training='f'"
+    sql = "SELECT name, plan_id FROM plans WHERE user_id=:id AND training='f'"
     res = db.session.execute(sql, {"id": user.get_id()})
     return res.fetchall() 
 
@@ -24,6 +24,8 @@ def add_sets_to_new_plan(sets, amount, plan_id):
     count = 1
     for i in range(amount):
         for x in range(int(sets[str(i)+"sets"])):
+            if not sets[str(i)+"amount"]:
+                continue
             sql = "INSERT INTO set (user_id, plan_id, move_id, place, reps) VALUES (:uid,:pid,:mid,:place,:reps)"
             db.session.execute(sql, {"uid": user.get_id(), "pid": plan_id, "mid": sets[str(i)+"move"], "place": count, "reps": sets[str(i)+"amount"]})
             count += 1
@@ -47,7 +49,7 @@ def get_one(plan_id):
     sql = "SELECT moves.name, set.place, set.reps, set.set_id FROM set INNER JOIN moves ON moves.move_id=set.move_id WHERE set.plan_id=:pid AND set.user_id=:uid ORDER BY set.place ASC"
     result = db.session.execute(sql, {"pid": plan_id, "uid": user.get_id()})
     res = result.fetchall()
-    return(res)
+    return res
 
 def get_info(plan_id):
     sql = "SELECT name, user_id, description, plan_id FROM plans WHERE plan_id=:pid"
